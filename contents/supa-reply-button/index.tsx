@@ -30,11 +30,24 @@ export const getStyle = () => {
 }
 
 const SupaReplyButton = () => {
+  const handleClick = () => {
+    const tweetTextElement = document.querySelector(
+      '[data-testid="tweetText"] > span'
+    )
+    if (tweetTextElement) {
+      const tweetText = tweetTextElement.textContent
+      const replyextElement = document.querySelector('[data-text="true"]')
+      alert(tweetText)
+      if (replyextElement) {
+        replyextElement.appendChild(document.createTextNode(tweetText))
+      }
+    }
+  }
   return (
     <button
       type="button"
       className="text-pink-500 p-2 hover:bg-pink-500 hover:bg-opacity-20 rounded-full transition-colors duration-200"
-      onClick={() => alert("Hello!")}>
+      onClick={() => handleClick()}>
       <BsLightningChargeFill className="w-4 h-4" />
     </button>
   )
