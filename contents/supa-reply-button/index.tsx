@@ -52,10 +52,12 @@ const SupaReplyButton = () => {
       //     input: tweetTextElements
       //   }
       // })
+      // @ts-ignore
       console.log("tweetTextElements: ", tweetTextElements.innerText)
       await sendToBackground({
         name: "complete",
         body: {
+          // @ts-ignore
           input: tweetTextElements.innerText
         }
       }).then((resp) => {
