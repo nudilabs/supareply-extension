@@ -53,6 +53,7 @@ const SupaReplyButton = () => {
           'span[data-text="true"]'
         )
         const event = new Event("input", { bubbles: true })
+        // @ts-ignore
         editedReplyTextElement.click()
         editedReplyTextElement.dispatchEvent(event)
       }
