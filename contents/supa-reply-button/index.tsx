@@ -7,6 +7,8 @@ import type {
 import { useEffect, useState } from "react"
 import { BsLightningChargeFill } from "react-icons/bs"
 
+import { sendToBackground } from "@plasmohq/messaging"
+
 export const config: PlasmoCSConfig = {
   matches: ["https://twitter.com/*"]
 }
@@ -30,7 +32,7 @@ export const getStyle = () => {
 }
 
 const SupaReplyButton = () => {
-  const handleClick = () => {
+  const handleClick = async () => {
     const isContentEmpty =
       document.querySelector('[data-text="true"]').innerHTML === ""
     if (isContentEmpty) {
@@ -44,14 +46,34 @@ const SupaReplyButton = () => {
       const replyTextElement = document.querySelector('span[data-text="true"]')
       console.log("replyTextElement: ", replyTextElement)
 
+      // const resp = await sendToBackground({
+      //   name: "complete",
+      //   body: {
+      //     input: tweetTextElements
+      //   }
+      // })
+      console.log("tweetTextElements: ", tweetTextElements.innerText)
+      await sendToBackground({
+        name: "complete",
+        body: {
+          input: tweetTextElements.innerText
+        }
+      }).then((resp) => {
+        console.log("resp: ", resp.message)
+        // const data = await resp.json()
+        tweetText = JSON.parse(resp.message).text
+      })
+
       const spanElement = document.createElement("span")
       spanElement.textContent = tweetText
       spanElement.setAttribute("data-text", "true")
+      console.log("resp: ", tweetText)
       if (replyTextElement.parentNode) {
         replyTextElement.parentNode.replaceChild(spanElement, replyTextElement)
         const editedReplyTextElement = document.querySelector(
           'span[data-text="true"]'
         )
+
         const event = new Event("input", { bubbles: true })
         // @ts-ignore
         editedReplyTextElement.click()
