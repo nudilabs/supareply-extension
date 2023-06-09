@@ -31,18 +31,34 @@ export const getStyle = () => {
 
 const SupaReplyButton = () => {
   const handleClick = () => {
-    const tweetTextElements = document.querySelectorAll(
+    const tweetTextElements = document.querySelector(
       '[data-testid="tweetText"]'
     )
-    let tweetText = ""
-    tweetTextElements.forEach((element) => {
-      tweetText += element.textContent
-    })
+    let tweetText = tweetTextElements.innerText
+    alert(tweetText)
     if (tweetText !== "") {
-      const replyextElement = document.querySelector('[data-text="true"]')
-      if (replyextElement) {
-        alert(replyextElement)
-        replyextElement.appendChild(document.createTextNode(tweetText))
+      const replyTextElement = document.querySelector('[data-text="true"]')
+      if (replyTextElement) {
+        const spanElement = document.createElement("span")
+        spanElement.textContent = "replying 3"
+
+        // Replace replyTextElement with spanElement
+        if (replyTextElement.parentNode) {
+          replyTextElement.parentNode.replaceChild(
+            spanElement,
+            replyTextElement
+          )
+          const parentElement = document.querySelector(
+            '[data-testid="tweetTextarea_0RichTextInputContainer"] > div'
+          )
+          console.log("parentElement: ", parentElement)
+          if (parentElement) {
+            parentElement.removeChild(parentElement.firstChild)
+          }
+        }
+
+        console.log("spanElement: ", spanElement)
+        console.log("replyTextElement: ", spanElement) // Updated reference to spanElement
       }
     }
   }
