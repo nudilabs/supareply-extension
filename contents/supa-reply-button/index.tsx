@@ -31,17 +31,26 @@ export const getStyle = () => {
 
 const SupaReplyButton = () => {
   const handleClick = () => {
-    const tweetTextElement = document.querySelector(
-      '[data-testid="tweetText"] > span'
+    const tweetTextElements = document.querySelectorAll(
+      '[data-testid="tweetText"]'
     )
-    if (tweetTextElement) {
-      const tweetText = tweetTextElement.textContent
+    let tweetText = ""
+    tweetTextElements.forEach((element) => {
+      tweetText += element.textContent
+    })
+    if (tweetText !== "") {
       const replyextElement = document.querySelector('[data-text="true"]')
-      alert(tweetText)
       if (replyextElement) {
+        alert(replyextElement)
         replyextElement.appendChild(document.createTextNode(tweetText))
       }
     }
+  }
+  const shouldRenderButton =
+    document.querySelector('h2[aria-level="2"] > span')?.textContent === "Tweet"
+
+  if (!shouldRenderButton) {
+    return null
   }
   return (
     <button
