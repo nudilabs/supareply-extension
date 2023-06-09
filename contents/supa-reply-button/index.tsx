@@ -4,6 +4,7 @@ import type {
   PlasmoGetInlineAnchor,
   PlasmoMountShadowHost
 } from "plasmo"
+import { useEffect, useState } from "react"
 import { BsLightningChargeFill } from "react-icons/bs"
 
 export const config: PlasmoCSConfig = {
@@ -13,7 +14,6 @@ export const config: PlasmoCSConfig = {
 export const getInlineAnchor: PlasmoGetInlineAnchor = () =>
   document.querySelector('[data-testid="toolBar"] > div')
 
-// Use this to optimize unmount lookups
 export const getShadowHostId = () => "supareply"
 
 export const mountShadowHost: PlasmoMountShadowHost = ({
@@ -31,34 +31,30 @@ export const getStyle = () => {
 
 const SupaReplyButton = () => {
   const handleClick = () => {
+    const isContentEmpty =
+      document.querySelector('[data-text="true"]').innerHTML === ""
+    if (isContentEmpty) {
+      alert("You need to type something before you can use supareply!")
+    }
     const tweetTextElements = document.querySelector(
       '[data-testid="tweetText"]'
     )
-    let tweetText = tweetTextElements.innerText
-    alert(tweetText)
-    if (tweetText !== "") {
-      const replyTextElement = document.querySelector('[data-text="true"]')
-      if (replyTextElement) {
-        const spanElement = document.createElement("span")
-        spanElement.textContent = "replying 3"
+    let tweetText = "Hello world!"
+    if (tweetTextElements) {
+      const replyTextElement = document.querySelector('span[data-text="true"]')
+      console.log("replyTextElement: ", replyTextElement)
 
-        // Replace replyTextElement with spanElement
-        if (replyTextElement.parentNode) {
-          replyTextElement.parentNode.replaceChild(
-            spanElement,
-            replyTextElement
-          )
-          const parentElement = document.querySelector(
-            '[data-testid="tweetTextarea_0RichTextInputContainer"] > div'
-          )
-          console.log("parentElement: ", parentElement)
-          if (parentElement) {
-            parentElement.removeChild(parentElement.firstChild)
-          }
-        }
-
-        console.log("spanElement: ", spanElement)
-        console.log("replyTextElement: ", spanElement) // Updated reference to spanElement
+      const spanElement = document.createElement("span")
+      spanElement.textContent = tweetText
+      spanElement.setAttribute("data-text", "true")
+      if (replyTextElement.parentNode) {
+        replyTextElement.parentNode.replaceChild(spanElement, replyTextElement)
+        const editedReplyTextElement = document.querySelector(
+          'span[data-text="true"]'
+        )
+        const event = new Event("input", { bubbles: true })
+        editedReplyTextElement.click()
+        editedReplyTextElement.dispatchEvent(event)
       }
     }
   }
