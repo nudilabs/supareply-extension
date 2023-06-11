@@ -10,7 +10,7 @@ const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
   console.log("message: ", message)
 
   res.send({
-    message
+    message: JSON.parse(message)
   })
 }
 
