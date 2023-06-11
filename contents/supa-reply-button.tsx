@@ -1,4 +1,4 @@
-import cssText from "data-text:~style.css"
+import cssText from "data-text:@/style.css"
 import type {
   PlasmoCSConfig,
   PlasmoGetInlineAnchor,
@@ -49,9 +49,9 @@ const SupaReplyButton = () => {
     let tweetText = "Hello world!"
     if (tweetTextElements) {
       const replyTextElement = document.querySelector('span[data-text="true"]')
-      console.log("replyTextElement: ", replyTextElement)
+
       // @ts-ignore
-      console.log("tweetTextElements: ", tweetTextElements.innerText)
+
       await sendToBackground({
         name: "complete",
         body: {
@@ -59,14 +59,12 @@ const SupaReplyButton = () => {
           input: tweetTextElements.innerText
         }
       }).then((resp) => {
-        console.log("resp: ", resp)
         tweetText = resp.message
       })
 
       const spanElement = document.createElement("span")
       spanElement.textContent = tweetText
       spanElement.setAttribute("data-text", "true")
-      console.log("resp: ", tweetText)
       if (replyTextElement.parentNode) {
         replyTextElement.parentNode.replaceChild(spanElement, replyTextElement)
         const editedReplyTextElement = document.querySelector(

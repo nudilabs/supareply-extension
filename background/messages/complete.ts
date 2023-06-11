@@ -1,8 +1,9 @@
+import { ENV } from "@/utils/Env"
+
 import type { PlasmoMessaging } from "@plasmohq/messaging"
 
 const handler: PlasmoMessaging.MessageHandler = async (req, res) => {
-  console.log("req.body: ", req.body.input)
-  const respMsg = await fetch("http://localhost:3000/api/complete", {
+  const respMsg = await fetch(`${ENV.API_URL}complete`, {
     method: "POST",
     body: JSON.stringify(req.body.input)
   })
