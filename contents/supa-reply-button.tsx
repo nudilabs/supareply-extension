@@ -2,6 +2,7 @@ import cssText from "data-text:~style.css"
 import type {
   PlasmoCSConfig,
   PlasmoGetInlineAnchor,
+  PlasmoGetOverlayAnchor,
   PlasmoMountShadowHost
 } from "plasmo"
 import { useEffect, useState } from "react"
@@ -13,7 +14,7 @@ export const config: PlasmoCSConfig = {
   matches: ["https://twitter.com/*"]
 }
 
-export const getInlineAnchor: PlasmoGetInlineAnchor = () =>
+export const getInlineAnchor: PlasmoGetInlineAnchor = async () =>
   document.querySelector('[data-testid="toolBar"] > div')
 
 export const getShadowHostId = () => "supareply"
