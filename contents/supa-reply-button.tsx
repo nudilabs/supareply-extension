@@ -5,7 +5,7 @@ import type {
   PlasmoMountShadowHost
 } from "plasmo"
 import { useState } from "react"
-import { BsLightningChargeFill } from "react-icons/bs"
+import { BsLightningFill } from "react-icons/bs"
 
 import { sendToBackground } from "@plasmohq/messaging"
 
@@ -56,7 +56,9 @@ const SupaReplyButton = () => {
         name: "complete",
         body: {
           // @ts-ignore
-          input: tweetTextElements.innerText
+          tweet: tweetTextElements.innerText,
+          // @ts-ignore
+          reply: replyTextElement.innerText
         }
       }).then((resp) => {
         tweetText = resp.message
@@ -110,7 +112,7 @@ const SupaReplyButton = () => {
           </svg>
         </span>
       ) : (
-        <BsLightningChargeFill className="w-4 h-4" />
+        <BsLightningFill className="w-4 h-4" />
       )}
     </button>
   )
