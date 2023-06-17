@@ -84,9 +84,9 @@ const SupaReplyButton = () => {
   const shouldRenderButton =
     document.querySelector('h2[aria-level="2"] > span')?.textContent === "Tweet"
 
-  if (!shouldRenderButton) {
-    return null
-  }
+  // if (!shouldRenderButton) {
+  //   return null
+  // }
   return (
     <button
       type="button"
